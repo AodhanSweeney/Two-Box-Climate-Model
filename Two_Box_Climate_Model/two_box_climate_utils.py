@@ -215,14 +215,3 @@ def stability_analysis(branch, linear_or_non_linear):
     return(stability_verdicts)
 
 
-# In[ ]:
-
-
-
-
-
-# In[ ]:
-
-
-
-
