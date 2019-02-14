@@ -117,11 +117,6 @@ def linear_albedo_solver(mu1, mu2, guess_1, guess_2):
     deepfreeze = np.array(deepfreeze)
     return(deepfreeze)
     
-
-    
-    
-#NEW STUFF
-
 def non_linear_stability_analysis(branch):
     """The structure of the bifurcation fold leads to the question of stability for each of the braches. 
     In order to analyze the stability of each of these branches we use the technique of finding stabilty used
@@ -213,16 +208,5 @@ def stability_analysis(branch, linear_or_non_linear):
             stability_verdicts.append([z1,z2])
 
     return(stability_verdicts)
-
-
-# In[ ]:
-
-
-
-
-
-# In[ ]:
-
-
 
 

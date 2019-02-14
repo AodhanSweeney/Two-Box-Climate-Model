@@ -92,7 +92,6 @@ plt.ylabel("Globally Averaged Temperatures (k)")
 plt.title('Fraedrich 1978 Zero Dimmensional Climate Model')
 plt.legend()
 
-
 # In[ ]:
 
 
