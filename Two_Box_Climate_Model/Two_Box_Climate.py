@@ -15,24 +15,24 @@ coupled autonomous equations representing climate."""
 
 #BEGIN CODE
 
-
+print('hey')
 import nbimporter
 import numpy as np
 import two_box_climate_utils
 import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
-get_ipython().run_line_magic('matplotlib', 'notebook')
-
+#get_ipython().run_line_magic('matplotlib', 'notebook')
+print('hey')
 if __name__ == '__main__':
+    print('hey')
+    mu1 = np.linspace(.9,1.1,50) #Variations of the solar constant paramter for polar zone
+    mu2 = np.linspace(.9,1.1,50) #Variations for the tropic solar constant
 
-    mu1 = np.linspace(.9,1.1,100) #Variations of the solar constant paramter for polar zone
-    mu2 = np.linspace(.9,1.1,100) #Variations for the tropic solar constant
-
-
+    print('ey')
     #Begining of User Input. User will specifiy whether to plot the linear or non-linear heat flux:
-    lin_or_nonlin = str(input("Shall we plot the linear or non-linear heat flux parameterization? Type linear or non-linear: " ))
-
-
+    #lin_or_nonlin = str(input("Shall we plot the linear or non-linear heat flux parameterization? Type linear or non-linear: " ))
+    lin_or_nonlin = 'linear'
+    print('hey')
     if lin_or_nonlin == 'non-linear':
 
         #Looking for the lower branch solution that comes from the bifurcation line.
@@ -49,6 +49,7 @@ if __name__ == '__main__':
         solutions_500 = solutions_500.astype(float)
 
         deepfreeze_solns = two_box_climate_utils.non_linear_albedo_solver(mu1, mu2, 250, 255)
+        deepfreeze_solns = np.array(deepfreeze_solns)
         deepfreeze_solns = deepfreeze_solns.astype(float)
 
         polar_tropic_input = str(input('Shall we plot the tropical equilibrium surface or polar? Type polar or tropic: '))
@@ -136,6 +137,7 @@ if __name__ == '__main__':
 
         #Now finding the deep freeze solutions corresponding to an ice age
         deepfreeze_solns = two_box_climate_utils.linear_albedo_solver(mu1, mu2, 250, 255)
+        deepfreeze_solns = np.array(deepfreeze_solns)
         deepfreeze_solns = deepfreeze_solns.astype(float)
 
         polar_tropic_input = input("Shall we plot the tropical equilibrium surface or polar? Type polar or tropic: ")
