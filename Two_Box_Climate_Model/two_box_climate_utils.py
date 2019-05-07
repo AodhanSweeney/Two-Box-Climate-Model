@@ -103,19 +103,65 @@ def linear_albedo_feedback(k_vector, mu1, mu2):
     return(temp)
 
 
+def non_linear_albedo_solver(mu1, mu2, guess_1, guess_2):
+    """This solution is a modeling of a situation where solar intensity is decreased sufficiently until the earth 
+    produces enough ice that the earth will reflect sufficient radiation to keep the earth in an ice age.
+    Ice ages are still subject to a heat flux, the below function finds the equilibria for the ice ages for 
+    made with a non-linear heat flux."""
+    import numpy as np
+    import sympy
+    import mpmath
+    #List of Constants
+    I0 = 1367.0 #Solar constant W/m^2
+    a = 2.8 #Unitless parameter needed for linear albedo feedback relationships more info in Budyko 1969
+    b=.009 #Another parameter needed for linear feedback relationship more info in Budyko 1969
+    sig = 5.67*10**-8 #Stephan boltzmann constant m^2 kg s^-2 K^-1
+    e = .64 #Emmisivity of earth
+    A = 600 #Heat flux parameter for non linear heat forcing
+    solution_array = []
+    for x in mu1:
+        for y in mu2:
+            #Below we find the two-dimensional vector solutions in form of [polar_solution, tropical_solution]
+            f = [lambda T1,T2: (.156*x*I0*(1-.75) - e*sig*(T1**4)+(A/(T2 -T1))), 
+                 lambda T1,T2: (.288*y*I0*(1-.75) - e*sig*(T2**4)+(A/(T1 -T2)))]
+            solution = np.array(mpmath.findroot(f, ([complex_guess_1, complex_guess_2]), 
+                                                solver='muller', verify = False))
+            if abs(mpmath.im(solution[0])) > 1e-10:
+                solution[0] = np.nan
+            if abs(mpmath.im(solution[1])) > 1e-10:
+                solution[1] = np.nan
+            solution_array.append([mpmath.re(solution[0]), mpmath.re(solution[1]), x, y])
+    return(solution_array)
+
 def linear_albedo_solver(mu1, mu2, guess_1, guess_2):
     """For the case of unstable solutions and ranges of the plot, we must have a stable linear albedo feeback solution.
     This solution is a modeling of a situation where solar intensity is decreased sufficiently until the earth 
-    produces enough ice that the earth will reflect sufficient radiation to keep the earth in a stable ice age."""
+    produces enough ice that the earth will reflect sufficient radiation to keep the earth in an ice age.
+    Finding equilibria for the ice age solutions using a linear heat flux."""
     import numpy as np
-    from scipy.optimize import fsolve
-    deepfreeze = []
+    import sympy
+    import mpmath
+    #List of Constants
+    I0 = 1367.0 #Solar constant W/m^2
+    a = 2.8 #Unitless parameter needed for linear albedo feedback relationships more info in Budyko 1969
+    b=.009 #Another parameter needed for linear feedback relationship more info in Budyko 1969
+    sig = 5.67*10**-8 #Stephan boltzmann constant m^2 kg s^-2 K^-1
+    e = .64 #Emmisivity of earth
+    A = 3 #Heat flux parameter for linear heat forcing
+    solution_array = []
     for x in mu1:
         for y in mu2:
-            solution = fsolve(linear_albedo_feedback, [guess_1, guess_2], args =(x,y))
-            deepfreeze.append([solution[0], solution[1], x, y])
-    deepfreeze = np.array(deepfreeze)
-    return(deepfreeze)
+            #Below we find the two-dimensional vector solutions in form of [polar_solution, tropical_solution]
+            f = [lambda T1,T2: (.156*x*I0*(1-.75) - e*sig*(T1**4)+(A*(T2 -T1))), 
+                 lambda T1,T2: (.288*y*I0*(1-.75) - e*sig*(T2**4)+(A*(T1 -T2)))]
+            solution = np.array(mpmath.findroot(f, ([complex_guess_1, complex_guess_2]), 
+                                                solver='muller', verify = False))
+            if abs(mpmath.im(solution[0])) > 1e-10:
+                solution[0] = np.nan
+            if abs(mpmath.im(solution[1])) > 1e-10:
+                solution[1] = np.nan
+            solution_array.append([mpmath.re(solution[0]), mpmath.re(solution[1]), x, y])
+    return(solution_array)
     
 def non_linear_stability_analysis(branch):
     """The structure of the bifurcation fold leads to the question of stability for each of the braches. 
