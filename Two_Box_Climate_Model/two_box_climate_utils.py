@@ -76,32 +76,6 @@ def nonlinear_equilibrium(mu1, mu2, complex_guess_1, complex_guess_2):
             solution_array.append([mpmath.re(solution[0]), mpmath.re(solution[1]), x, y])
     return(solution_array)
 
-    
-def linear_albedo_feedback(k_vector, mu1, mu2):
-    """To create the linear albedo feedback we follow the methods used in the 1978 fraedrich paper, assinging 
-    an 'a' parameter value of .75 and finding solutions to the system of differential equations.
-    The linear albedo feedback produced only real solutions. Because of this, we may take advantage of the speeds
-    of computation provided through the scipy package because we do not need to search for nonreal answers to 
-    eliminate. For more information: https://docs.scipy.org/doc/scipy/reference/optimize.html"""
-    import numpy as np
-    from scipy.optimize import fsolve
-    #List of Constants
-    I0 = 1367.0 #Solar constant W/m^2
-    a = .75 #Unitless parameter needed for linear albedo feedback relationships more info in Budyko 1969
-    sig = 5.67*10**-8 #Stephan boltzmann constant m^2 kg s^-2 K^-1
-    e = .64 #Emmisivity of earth
-    T1 = k_vector[0]
-    T2 = k_vector[1]
-    temp = np.zeros(2)
-    temp[0] = (.156*mu1*I0*(1-.75) - e*sig*(T1**4))*(1.0*10**-8)
-    temp[1] = (.288*mu2*I0*(1-.75) - e*sig*(T2**4))*(1.5*10**-8)
-    """    deepfreeze = []
-    for x in mu1:
-        for y in mu2:
-            solution = fsolve(linear_abledo_feedback, k_vector, args =(x,y))
-            deepfreeze.append([solution[0], solution[1], x, y])"""
-    return(temp)
-
 
 def non_linear_albedo_solver(mu1, mu2, guess_1, guess_2):
     """This solution is a modeling of a situation where solar intensity is decreased sufficiently until the earth 
