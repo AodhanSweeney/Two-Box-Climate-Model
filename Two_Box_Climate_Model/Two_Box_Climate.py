@@ -48,7 +48,7 @@ if __name__ == '__main__':
         solutions_500 = np.array(solutions_500)
         solutions_500 = solutions_500.astype(float)
         
-        deepfreeze_solns = two_box_climate_utils.nonlinear_albedo_solver(mu1, mu2, 250, 255)
+        deepfreeze_solns = two_box_climate_utils.non_linear_albedo_solver(mu1, mu2, 250, 255)
         deepfreeze_solns = deepfreeze_solns.astype(float)
 
         polar_tropic_input = str(input('Shall we plot the tropical equilibrium surface or polar? Type polar or tropic: '))
