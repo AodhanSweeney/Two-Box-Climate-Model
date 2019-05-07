@@ -28,10 +28,6 @@ if __name__ == '__main__':
     mu1 = np.linspace(.9,1.1,100) #Variations of the solar constant paramter for polar zone
     mu2 = np.linspace(.9,1.1,100) #Variations for the tropic solar constant
     
-    #First we must create the linear albedo feedback solutions for both the polar and tropical zones respectively.
-    deepfreeze_solns = two_box_climate_utils.linear_albedo_solver(mu1, mu2, 250, 255)
-    deepfreeze_solns = deepfreeze_solns.astype(float)
-    
     
     #Begining of User Input. User will specifiy whether to plot the linear or non-linear heat flux:
     lin_or_nonlin = str(input("Shall we plot the linear or non-linear heat flux parameterization? Type linear or non-linear: " ))
@@ -51,6 +47,9 @@ if __name__ == '__main__':
         solutions_500 = two_box_climate_utils.nonlinear_equilibrium(mu1, mu2, (500+1j), (505+1j))
         solutions_500 = np.array(solutions_500)
         solutions_500 = solutions_500.astype(float)
+        
+        deepfreeze_solns = two_box_climate_utils.nonlinear_albedo_solver(mu1, mu2, 250, 255)
+        deepfreeze_solns = deepfreeze_solns.astype(float)
 
         polar_tropic_input = str(input('Shall we plot the tropical equilibrium surface or polar? Type polar or tropic: '))
         
@@ -134,6 +133,11 @@ if __name__ == '__main__':
         solutions_350 = two_box_climate_utils.linear_equilibrium(mu1, mu2, (350+1j), (355+1j))
         solutions_350 = np.array(solutions_350)
         solutions_350 = solutions_350.astype(float)
+        
+        #Now finding the deep freeze solutions corresponding to an ice age
+        deepfreeze_solns = two_box_climate_utils.linear_albedo_solver(mu1, mu2, 250, 255)
+        deepfreeze_solns = deepfreeze_solns.astype(float)
+        
         polar_tropic_input = input("Shall we plot the tropical equilibrium surface or polar? Type polar or tropic: ")
 
 
