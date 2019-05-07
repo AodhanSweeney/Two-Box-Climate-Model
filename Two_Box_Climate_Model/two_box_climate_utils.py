@@ -136,43 +136,6 @@ def linear_albedo_solver(mu1, mu2, guess_1, guess_2):
                 solution[1] = np.nan
             solution_array.append([mpmath.re(solution[0]), mpmath.re(solution[1]), x, y])
     return(solution_array)
-    
-def non_linear_stability_analysis(branch):
-    """The structure of the bifurcation fold leads to the question of stability for each of the braches. 
-    In order to analyze the stability of each of these branches we use the technique of finding stabilty used
-    in the Fraedrich 1978 paper. This is a linearization method where each of the coupled differential 
-    equations are differentiated and put into a jacobian matrix and eigenvalues are found. If eigenvalues are
-    both positive the equilibrium position is an unstable node, if both negative a stable node, if one postive 
-    and one negative it is unstable saddlepoint, if we have nonreal solutions then there can be no certainty in 
-    the stability."""
-    import numpy as np
-    import mpmath    
-    #List of Constants
-    I0 = 1367.0 # Solar constant W/m^2
-    b=.009 # Parameter needed for linear feedback relationship more info in Budyko 1969 K^(-1)
-    sig = 5.67*10**-8 # Stephan boltzmann constant m^2 kg s^-2 K^-1
-    e = .64 # Emmisivity of earth
-    A = 600 # Heat flux parameter. Derived for mixing timescales of 8-16 months and temp difference 20-30 deg K
-    select = ~np.isnan(branch[:,0])
-    branch = branch[select]
-    stability_verdicts = []
-    for eq_position in branch:
-        polartemp = eq_position[0]
-        tropicalttemp = eq_position[1]
-        pmu = eq_position[2] # Polar Mu Value: regulates solar intensity in polar box.
-        tmu = eq_position[3] # Tropical Mu Value: regulates solar intensity in tropical box.
-        J11 = (.156*pmu*I0*b - 4*e*sig*(polartemp**3) + A/((tropicaltemp - polartemp)**2)) #Jacobian position 11
-        J22 = (.288*tmu*I0*b - 4*e*sig*(tropicaltemp**3) + A/((polartemp-tropicaltemp)**2))#Jacobian 22
-        J12 = -A/((tropicaltemp - polartemp)**2)
-        J21 = -A/((polartemp - tropicaltemp)**2)
-
-        f = [lambda z: ((J11 - z)*(J22 - z)- (J12)*(J21))]
-        z1 = np.array(mpmath.findroot(f, ([150+1j]), solver='muller', verify = False))
-        z2 = np.array(mpmath.findroot(f, ([-150+1j]), solver='muller', verify = False))
-        stability_verdicts.append([z1,z2])
-        
-
-    return(stability_verdicts)
 
 
 def stability_analysis(branch, linear_or_non_linear):
