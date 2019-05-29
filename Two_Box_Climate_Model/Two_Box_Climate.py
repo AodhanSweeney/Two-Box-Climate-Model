@@ -15,7 +15,6 @@ coupled autonomous equations representing climate."""
 
 #BEGIN CODE
 
-print('hey')
 import nbimporter
 import numpy as np
 import two_box_climate_utils
