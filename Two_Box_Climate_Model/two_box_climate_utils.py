@@ -91,7 +91,7 @@ def non_linear_albedo_solver(mu1, mu2, guess_1, guess_2):
     b=.009 #Another parameter needed for linear feedback relationship more info in Budyko 1969
     sig = 5.67*10**-8 #Stephan boltzmann constant m^2 kg s^-2 K^-1
     e = .64 #Emmisivity of earth
-    A = 600 #Heat flux parameter for non linear heat forcing
+    A = 600 #Heat flux parameter for non-linear heat forcing
     solution_array = []
     for x in mu1:
         for y in mu2:
@@ -128,7 +128,7 @@ def linear_albedo_solver(mu1, mu2, guess_1, guess_2):
             #Below we find the two-dimensional vector solutions in form of [polar_solution, tropical_solution]
             f = [lambda T1,T2: (.156*x*I0*(1-.75) - e*sig*(T1**4)+(A*(T2 -T1))),
                  lambda T1,T2: (.288*y*I0*(1-.75) - e*sig*(T2**4)+(A*(T1 -T2)))]
-            solution = np.array(mpmath.findroot(f, ([guess_1, guess_2]), 
+            solution = np.array(mpmath.findroot(f, ([guess_1, guess_2]),
                                                 solver='muller', verify = False))
             if abs(mpmath.im(solution[0])) > 1e-10:
                 solution[0] = np.nan

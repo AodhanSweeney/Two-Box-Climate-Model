@@ -21,17 +21,12 @@ import two_box_climate_utils
 import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
 #get_ipython().run_line_magic('matplotlib', 'notebook')
-print('hey')
 if __name__ == '__main__':
-    print('hey')
     mu1 = np.linspace(.9,1.1,50) #Variations of the solar constant paramter for polar zone
     mu2 = np.linspace(.9,1.1,50) #Variations for the tropic solar constant
 
-    print('ey')
     #Begining of User Input. User will specifiy whether to plot the linear or non-linear heat flux:
-    #lin_or_nonlin = str(input("Shall we plot the linear or non-linear heat flux parameterization? Type linear or non-linear: " ))
-    lin_or_nonlin = 'linear'
-    print('hey')
+    lin_or_nonlin = str(input("Shall we plot the linear or non-linear heat flux parameterization? Type linear or non-linear: " ))
     if lin_or_nonlin == 'non-linear':
 
         #Looking for the lower branch solution that comes from the bifurcation line.
@@ -47,7 +42,7 @@ if __name__ == '__main__':
         solutions_500 = np.array(solutions_500)
         solutions_500 = solutions_500.astype(float)
 
-        deepfreeze_solns = two_box_climate_utils.non_linear_albedo_solver(mu1, mu2, 250, 255)
+        deepfreeze_solns = two_box_climate_utils.non_linear_albedo_solver(mu1, mu2, (250+1j), (255+1j))
         deepfreeze_solns = np.array(deepfreeze_solns)
         deepfreeze_solns = deepfreeze_solns.astype(float)
 
@@ -135,7 +130,7 @@ if __name__ == '__main__':
         solutions_350 = solutions_350.astype(float)
 
         #Now finding the deep freeze solutions corresponding to an ice age
-        deepfreeze_solns = two_box_climate_utils.linear_albedo_solver(mu1, mu2, 250, 255)
+        deepfreeze_solns = two_box_climate_utils.linear_albedo_solver(mu1, mu2, (250+1j), (255+1j))
         deepfreeze_solns = np.array(deepfreeze_solns)
         deepfreeze_solns = deepfreeze_solns.astype(float)
 
@@ -195,10 +190,10 @@ if __name__ == '__main__':
             plt.title('Linear Heat Flux Tropical Equilibrium Temperatures')
 
             stability_lower = two_box_climate_utils.stability_analysis(solutions_100, 'linear')
-            print("Eigenvalues for stability analysis of lower branch are ", stability_lower[0][0], " and ",
+            print("Eigenvalues for stability analysis of lower branch are  \n", stability_lower[0][0], " and \n",
                  stability_lower[0][1])
             stability_upper = two_box_climate_utils.stability_analysis(solutions_350, 'linear')
-            print("For the upper branch, stability is ", stability_upper[0][0], " and ", stability_upper[0][1])
+            print("For the upper branch, stability is \n", stability_upper[0][0], " and \n", stability_upper[0][1])
 
         else:
             print('That was not a valid input. Run the model again.')
