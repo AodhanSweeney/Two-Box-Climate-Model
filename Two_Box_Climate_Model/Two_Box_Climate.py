@@ -1,8 +1,4 @@
 #!/usr/bin/env python
-# coding: utf-8
-
-# In[14]:
-
 
 """Welcome to the two box climate scheme. This code tests parameterizations of the meridional heat flux between the
 two box system. In this climate model, two boxes share energy via a heat flux term. Because of the ambiguity
