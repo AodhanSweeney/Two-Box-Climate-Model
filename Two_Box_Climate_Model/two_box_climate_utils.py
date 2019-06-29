@@ -1,8 +1,4 @@
 #!/usr/bin/env python
-# coding: utf-8
-
-# In[1]:
-
 
 """This is a tool box for the Two Box Climate Scheme modlue. In this tool box are functions used for calculating
 equilibrium position, its stability, and other quantities associated with the two box model created in the 2018-2019
