@@ -7,8 +7,8 @@ as the original. Because of this, finding where the linearized version is stable
 stable as well. The data output is saved as a .npy file
 NOTE: C1 and C2 are kept out of these equations because multiplying by such a small number makes the computational
 method of finding roots eventually start to register significant imaginary parts of the solution (i*10^-6). This has
-been cross referenced with other methods for root finding and solutions DO NOT have imaginary parts. Also, 
-we are only testing the upper branch solutions which appear to be the best hope for finding a stable configuration.
+been cross referenced with other methods for root finding. Also, we are only testing the upper branch solutions which 
+appears to be the best hope for finding a stable configuration.
 
 
 Aodhan Sweeney
