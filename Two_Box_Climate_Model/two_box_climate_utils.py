@@ -117,7 +117,7 @@ def linear_albedo_solver(mu1, mu2, guess_1, guess_2):
     b=.009 #Another parameter needed for linear feedback relationship more info in Budyko 1969
     sig = 5.67*10**-8 #Stephan boltzmann constant m^2 kg s^-2 K^-1
     e = .64 #Emmisivity of earth
-    A = 3 #Heat flux parameter for linear heat forcing
+    A = 2.7 #Heat flux parameter for linear heat forcing
     solution_array = []
     for x in mu1:
         for y in mu2:
